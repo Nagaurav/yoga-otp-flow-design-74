@@ -9,42 +9,48 @@ const InstructorDetail = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   
-  // Mock instructor data (in a real app this would come from an API call)
+  // Mock instructor data based on id
   const instructor = {
     id,
-    name: "Alexa Chen",
-    speciality: "Hatha Yoga",
-    experience: "7+ years",
-    rating: 4.9,
-    reviews: 128,
+    name: id === "1" ? "Riya Sharma" : "Amit Patel",
+    speciality: id === "1" ? "Ashtanga Yoga" : "Hatha Yoga",
+    experience: "5+ years",
+    rating: id === "1" ? 4.8 : 4.7,
+    reviews: id === "1" ? 150 : 98,
     imageUrl: "https://placehold.co/400x400",
-    bio: "Alexa is a certified Hatha Yoga instructor with over 7 years of experience. She specializes in helping beginners build a strong foundation and develop proper alignment. Her classes focus on mindfulness and connecting breath with movement.",
-    location: "Central Delhi",
-    languages: ["English", "Hindi"],
-    certifications: ["RYT-200", "Yoga Alliance Certification"],
-    classes: [
-      { id: 1, title: "Morning Flow", duration: "60 min", type: "Group", price: "₹500" },
-      { id: 2, title: "One-to-One Session", duration: "45 min", type: "Private", price: "₹1200" },
-      { id: 3, title: "Yoga for Beginners", duration: "75 min", type: "Group", price: "₹600" }
+    bio: id === "1" 
+      ? "Riya is a certified Ashtanga Yoga instructor with over 5 years of experience. She specializes in helping practitioners build strength and flexibility through traditional Ashtanga sequences. Her classes focus on breath control and proper alignment."
+      : "Amit is a passionate Hatha Yoga instructor dedicated to helping students find balance between body and mind. With 5+ years of teaching experience, he emphasizes proper form and mindful practice.",
+    city: id === "1" ? "Mumbai" : "Delhi",
+    availableSlots: [
+      { id: 1, time: "6:00 AM - 7:00 AM" },
+      { id: 2, time: "7:00 PM - 8:00 PM" }
     ],
-    availableTimes: ["7:00 AM", "9:00 AM", "5:00 PM", "7:30 PM"]
+    certifications: ["RYT-200", "Yoga Alliance Certification"],
   };
   
   // Sample reviews
   const reviews = [
     { 
       id: 1, 
-      user: "Priya S.", 
+      user: "Meera K.", 
       rating: 5, 
-      comment: "Alexa is an amazing instructor! Her sessions are both challenging and relaxing. Highly recommend.", 
+      comment: "Amazing instructor! Riya's attention to detail helped me improve my practice tremendously.", 
       date: "2 weeks ago" 
     },
     { 
       id: 2, 
-      user: "Ravi K.", 
+      user: "Arjun S.", 
       rating: 4, 
-      comment: "Great instructor. Very attentive and provides good modifications for beginners.", 
+      comment: "Great energy and very knowledgeable. Highly recommend for beginners.", 
       date: "1 month ago" 
+    },
+    {
+      id: 3,
+      user: "Neha P.",
+      rating: 5,
+      comment: "The best yoga instructor I've had. Very patient and supportive.",
+      date: "3 weeks ago"
     }
   ];
 
@@ -88,105 +94,72 @@ const InstructorDetail = () => {
           </div>
           <div className="flex items-center text-xs bg-green-50 text-green-700 px-2 py-1 rounded-full">
             <MapPin className="h-3 w-3 mr-1" />
-            {instructor.location}
+            {instructor.city}
           </div>
-          {instructor.languages.map(lang => (
-            <div key={lang} className="text-xs bg-gray-100 text-gray-700 px-2 py-1 rounded-full">
-              {lang}
-            </div>
-          ))}
         </div>
         
-        <div className="flex gap-2 mb-6">
+        {/* Bio */}
+        <div className="mb-6">
+          <h3 className="font-semibold text-slate-800 mb-2">About</h3>
+          <p className="text-slate-600 text-sm">{instructor.bio}</p>
+        </div>
+        
+        {/* Available time slots */}
+        <div className="mb-6">
+          <h3 className="font-semibold text-slate-800 mb-2">Available Time Slots</h3>
+          <div className="flex gap-2 flex-wrap">
+            {instructor.availableSlots.map(slot => (
+              <div 
+                key={slot.id} 
+                className="px-3 py-2 bg-green-50 border border-green-200 rounded-lg text-green-700 text-sm"
+              >
+                {slot.time}
+              </div>
+            ))}
+          </div>
+        </div>
+        
+        {/* Action buttons */}
+        <div className="flex flex-col gap-3 mb-6">
           <Button 
-            className="flex-1 bg-blue-500 hover:bg-blue-600"
+            className="w-full bg-blue-500 hover:bg-blue-600"
             onClick={() => navigate(`/instructors/${instructor.id}/book`)}
           >
             <Calendar className="h-4 w-4 mr-2" />
-            Book Session
+            Book One-on-One
           </Button>
+          
           <Button 
             variant="outline" 
-            className="flex-1 border-blue-200 text-blue-600 hover:bg-blue-50"
-            onClick={() => navigate(`/messages/${instructor.id}`)}
+            className="w-full border-indigo-200 text-indigo-600 hover:bg-indigo-50"
+            onClick={() => navigate(`/instructors/${instructor.id}/video`)}
+          >
+            <Video className="h-4 w-4 mr-2" />
+            Join Video Session
+          </Button>
+          
+          <Button 
+            variant="outline" 
+            className="w-full border-green-200 text-green-600 hover:bg-green-50"
+            onClick={() => navigate(`/messages/chat/${instructor.id}`)}
           >
             <MessageCircle className="h-4 w-4 mr-2" />
-            Message
+            Chat with Instructor
           </Button>
         </div>
         
-        <Tabs defaultValue="about">
-          <TabsList className="grid grid-cols-3 mb-6">
-            <TabsTrigger value="about">About</TabsTrigger>
-            <TabsTrigger value="classes">Classes</TabsTrigger>
-            <TabsTrigger value="reviews">Reviews</TabsTrigger>
-          </TabsList>
-          
-          <TabsContent value="about" className="space-y-4">
-            <div>
-              <h3 className="font-semibold text-slate-800 mb-2">Bio</h3>
-              <p className="text-slate-600 text-sm">{instructor.bio}</p>
+        {/* Reviews section */}
+        <div>
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="font-semibold text-slate-800">Reviews</h3>
+            <div className="flex items-center">
+              <Star className="h-4 w-4 text-yellow-500 mr-1" />
+              <span className="font-medium">{instructor.rating}</span>
+              <span className="text-slate-500 text-xs ml-1">({instructor.reviews} reviews)</span>
             </div>
-            
-            <div>
-              <h3 className="font-semibold text-slate-800 mb-2">Certifications</h3>
-              <ul className="text-sm text-slate-600 list-disc pl-5">
-                {instructor.certifications.map(cert => (
-                  <li key={cert}>{cert}</li>
-                ))}
-              </ul>
-            </div>
-          </TabsContent>
+          </div>
           
-          <TabsContent value="classes" className="space-y-3">
-            {instructor.classes.map(classItem => (
-              <div 
-                key={classItem.id}
-                className="p-3 border border-gray-100 rounded-xl shadow-sm"
-              >
-                <div className="flex justify-between items-start mb-1">
-                  <h3 className="font-medium text-slate-800">{classItem.title}</h3>
-                  <span className="font-semibold text-blue-600">{classItem.price}</span>
-                </div>
-                <div className="flex items-center text-xs text-slate-500 mb-2">
-                  <Clock className="h-3 w-3 mr-1" />
-                  <span>{classItem.duration}</span>
-                  <span className="mx-2 text-slate-300">•</span>
-                  <span className={`px-1.5 py-0.5 rounded-full ${
-                    classItem.type === 'Private' ? 'bg-indigo-100 text-indigo-700' : 'bg-green-100 text-green-700'
-                  }`}>{classItem.type}</span>
-                </div>
-                <Button 
-                  variant="outline" 
-                  size="sm" 
-                  className="w-full border-blue-200 text-blue-600 hover:bg-blue-50"
-                  onClick={() => navigate(`/instructors/${instructor.id}/book/${classItem.id}`)}
-                >
-                  <Calendar className="h-3 w-3 mr-2" />
-                  Book this class
-                </Button>
-              </div>
-            ))}
-          </TabsContent>
-          
-          <TabsContent value="reviews" className="space-y-4">
-            <div className="flex items-center justify-between mb-2">
-              <div>
-                <div className="flex items-center">
-                  <Star className="h-5 w-5 text-yellow-500 mr-1" />
-                  <span className="font-semibold text-lg">{instructor.rating}</span>
-                </div>
-                <p className="text-xs text-slate-500">{instructor.reviews} reviews</p>
-              </div>
-              <Button 
-                variant="outline" 
-                size="sm"
-                className="text-xs border-blue-200 text-blue-600 hover:bg-blue-50"
-              >
-                Write a Review
-              </Button>
-            </div>
-            
+          <div className="space-y-4">
             {reviews.map(review => (
               <div key={review.id} className="border-t border-gray-100 pt-3">
                 <div className="flex justify-between mb-1">
@@ -206,8 +179,8 @@ const InstructorDetail = () => {
                 <p className="text-xs text-slate-400">{review.date}</p>
               </div>
             ))}
-          </TabsContent>
-        </Tabs>
+          </div>
+        </div>
       </div>
     </div>
   );

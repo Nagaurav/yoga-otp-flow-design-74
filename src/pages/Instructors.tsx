@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Search, Calendar, MessageCircle, Star, Video } from 'lucide-react';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Badge } from '@/components/ui/badge';
 
 const Instructors = () => {
   const navigate = useNavigate();
@@ -14,40 +15,55 @@ const Instructors = () => {
   const instructors = [
     { 
       id: 1, 
-      name: "Alexa Chen", 
-      speciality: "Hatha Yoga", 
-      rating: 4.9, 
-      reviews: 128, 
+      name: "Riya Sharma", 
+      speciality: "Ashtanga Yoga", 
+      rating: 4.8, 
+      reviews: 150, 
       imageUrl: "https://placehold.co/400x400",
-      availability: "Available today" 
+      city: "Mumbai",
+      availability: "6:00 AM - 8:00 AM" 
     },
     { 
       id: 2, 
-      name: "Mike Johnson", 
-      speciality: "Power Yoga", 
+      name: "Amit Patel", 
+      speciality: "Hatha Yoga", 
       rating: 4.7, 
-      reviews: 84, 
+      reviews: 98, 
       imageUrl: "https://placehold.co/400x400",
-      availability: "Available tomorrow" 
+      city: "Delhi",
+      availability: "7:00 PM - 9:00 PM" 
     },
     { 
       id: 3, 
-      name: "Sarah Williams", 
-      speciality: "Meditation", 
-      rating: 4.8, 
-      reviews: 96, 
+      name: "Priya Verma", 
+      speciality: "Vinyasa Flow", 
+      rating: 4.9, 
+      reviews: 124, 
       imageUrl: "https://placehold.co/400x400",
-      availability: "Available today" 
+      city: "Bangalore",
+      availability: "5:30 AM - 7:30 AM" 
     },
     { 
       id: 4, 
-      name: "David Kumar", 
-      speciality: "Ashtanga Yoga", 
+      name: "Dhruv Kapoor", 
+      speciality: "Kundalini Yoga", 
       rating: 4.6, 
-      reviews: 72, 
+      reviews: 78, 
       imageUrl: "https://placehold.co/400x400",
-      availability: "Next available: Fri" 
+      city: "Mumbai",
+      availability: "6:00 PM - 8:00 PM" 
     },
+  ];
+
+  // Filter chips
+  const filterChips = [
+    { label: "Ashtanga", type: "style" },
+    { label: "Hatha", type: "style" },
+    { label: "Vinyasa", type: "style" },
+    { label: "Mumbai", type: "city" },
+    { label: "Delhi", type: "city" },
+    { label: "Morning", type: "time" },
+    { label: "Evening", type: "time" }
   ];
 
   return (
@@ -64,38 +80,27 @@ const Instructors = () => {
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
           <Input
             type="text"
-            placeholder="Search by name or yoga style..."
+            placeholder="Search instructors, yoga styles, or city..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             className="pl-9 h-12 rounded-xl border-2 border-blue-100 focus:border-blue-300 bg-blue-50/30"
           />
         </div>
         
-        <div className="flex gap-2">
-          <Select>
-            <SelectTrigger className="flex-1 h-10 rounded-xl border-2 border-blue-100 bg-blue-50/30">
-              <SelectValue placeholder="Yoga Style" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">All Styles</SelectItem>
-              <SelectItem value="hatha">Hatha Yoga</SelectItem>
-              <SelectItem value="power">Power Yoga</SelectItem>
-              <SelectItem value="ashtanga">Ashtanga</SelectItem>
-              <SelectItem value="meditation">Meditation</SelectItem>
-            </SelectContent>
-          </Select>
-          
-          <Select>
-            <SelectTrigger className="flex-1 h-10 rounded-xl border-2 border-blue-100 bg-blue-50/30">
-              <SelectValue placeholder="Availability" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="anytime">Any time</SelectItem>
-              <SelectItem value="today">Today</SelectItem>
-              <SelectItem value="tomorrow">Tomorrow</SelectItem>
-              <SelectItem value="weekend">This weekend</SelectItem>
-            </SelectContent>
-          </Select>
+        <div className="flex gap-2 overflow-x-auto pb-2 no-scrollbar">
+          {filterChips.map((chip, index) => (
+            <Badge 
+              key={index} 
+              variant="outline"
+              className={`px-3 py-1 rounded-full text-sm whitespace-nowrap cursor-pointer hover:bg-slate-100 ${
+                chip.type === 'style' ? 'border-blue-200 text-blue-700' : 
+                chip.type === 'city' ? 'border-green-200 text-green-700' : 
+                'border-purple-200 text-purple-700'
+              }`}
+            >
+              {chip.label}
+            </Badge>
+          ))}
         </div>
       </div>
       
@@ -116,6 +121,7 @@ const Instructors = () => {
               <div className="flex-1">
                 <h3 className="font-semibold text-slate-800">{instructor.name}</h3>
                 <p className="text-sm text-slate-600 mb-1">{instructor.speciality}</p>
+                <p className="text-xs text-slate-500 mb-1">{instructor.city}</p>
                 <div className="flex items-center text-sm">
                   <Star className="h-4 w-4 text-yellow-500 mr-1" />
                   <span className="font-medium">{instructor.rating}</span>
@@ -127,28 +133,16 @@ const Instructors = () => {
             
             <div className="flex gap-2 mt-3">
               <Button 
-                variant="outline"
+                variant="default"
                 size="sm"
-                className="flex-1 border-blue-200 text-blue-600 hover:bg-blue-50"
+                className="flex-1 bg-blue-500 hover:bg-blue-600"
                 onClick={(e) => {
                   e.stopPropagation();
                   navigate(`/instructors/${instructor.id}/book`);
                 }}
               >
                 <Calendar className="h-4 w-4 mr-1" />
-                Book
-              </Button>
-              <Button 
-                variant="outline"
-                size="sm"
-                className="flex-1 border-green-200 text-green-600 hover:bg-green-50"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  navigate(`/messages/${instructor.id}`);
-                }}
-              >
-                <MessageCircle className="h-4 w-4 mr-1" />
-                Message
+                Book Now
               </Button>
             </div>
           </div>

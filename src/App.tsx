@@ -13,6 +13,7 @@ import BookingPage from "./pages/BookingPage";
 import ContentBrowser from "./pages/ContentBrowser";
 import MessagesPage from "./pages/MessagesPage";
 import ChatDetail from "./pages/ChatDetail";
+import BookingConfirmation from "./pages/BookingConfirmation";
 
 const queryClient = new QueryClient();
 
@@ -29,6 +30,7 @@ const App = () => (
           <Route path="/instructors/:id" element={<InstructorDetail />} />
           <Route path="/instructors/:id/book" element={<BookingPage />} />
           <Route path="/instructors/:id/book/:classId" element={<BookingPage />} />
+          <Route path="/booking-confirmation" element={<BookingConfirmation />} />
           <Route path="/content" element={<ContentBrowser />} />
           <Route path="/messages" element={<MessagesPage />} />
           <Route path="/messages/chat/:id" element={<ChatDetail />} />

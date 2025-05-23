@@ -3,7 +3,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { ArrowLeft, Send, Calendar, Video, MessageCircle } from 'lucide-react';
+import { ArrowLeft, Send, Calendar, Video } from 'lucide-react';
 
 const ChatDetail = () => {
   const navigate = useNavigate();
@@ -11,10 +11,10 @@ const ChatDetail = () => {
   const [message, setMessage] = useState('');
   const messagesEndRef = useRef<HTMLDivElement>(null);
   
-  // Mock instructor data
+  // Mock instructor data based on id
   const instructor = {
     id,
-    name: "Alexa Chen",
+    name: id === "1" ? "Riya Sharma" : "Amit Patel",
     online: true,
     imageUrl: "https://placehold.co/400x400"
   };
@@ -22,8 +22,8 @@ const ChatDetail = () => {
   // Mock messages
   const [messages, setMessages] = useState([
     { id: 1, text: "Hello! How can I help you with your yoga practice today?", sender: 'instructor', time: '10:25 AM' },
-    { id: 2, text: "Hi Alexa! I've been having some lower back pain after yesterday's session.", sender: 'user', time: '10:28 AM' },
-    { id: 3, text: "I'm sorry to hear that. Let's modify your practice to avoid putting too much pressure on your lower back.", sender: 'instructor', time: '10:30 AM' }
+    { id: 2, text: "Hi Riya! I wanted to ask if your 7 AM slot is available tomorrow?", sender: 'user', time: '10:28 AM' },
+    { id: 3, text: "Yes! The 7 AM slot is available. You can book it now if you'd like.", sender: 'instructor', time: '10:30 AM' }
   ]);
   
   // Scroll to bottom whenever messages change
@@ -50,7 +50,7 @@ const ChatDetail = () => {
     setTimeout(() => {
       const response = {
         id: messages.length + 2,
-        text: "I understand. Let's focus on gentle stretches next time. Would you like to book a personalized session to address this?",
+        text: "Great! I'll see you at the session tomorrow. Would you like me to prepare anything specific for your practice?",
         sender: 'instructor',
         time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
       };
@@ -137,6 +137,17 @@ const ChatDetail = () => {
         ))}
         
         <div ref={messagesEndRef} />
+      </div>
+      
+      {/* Start Video Call Button */}
+      <div className="px-4 py-2">
+        <Button 
+          className="w-full bg-green-500 hover:bg-green-600"
+          onClick={() => navigate(`/messages/call/${id}?type=video`)}
+        >
+          <Video className="h-4 w-4 mr-2" /> 
+          Start Video Call
+        </Button>
       </div>
       
       {/* Message Input */}
