@@ -36,7 +36,7 @@ const ChatDetail = () => {
   return (
     <div className="flex flex-col h-full">
       {/* Header */}
-      <div className="bg-white border-b border-gray-100 shadow-sm py-2">
+      <div className="bg-white border-b border-gray-100 shadow-sm py-3">
         <div className="flex items-center px-4">
           <Button 
             variant="ghost" 
@@ -47,7 +47,7 @@ const ChatDetail = () => {
             <ArrowLeft className="h-5 w-5" />
           </Button>
           
-          <div className="w-10 h-10 rounded-full bg-gray-200 mr-3"></div>
+          <div className="w-10 h-10 rounded-full bg-blue-200 mr-3"></div>
           
           <div className="flex-1">
             <h2 className="font-semibold text-slate-800">Instructor Name</h2>
@@ -58,7 +58,7 @@ const ChatDetail = () => {
             <Button 
               variant="ghost" 
               size="icon"
-              className="text-blue-600 rounded-full"
+              className="text-blue-600 rounded-full bg-blue-50 hover:bg-blue-100"
               onClick={() => navigate(`/instructors/${id}/book`)}
             >
               <Calendar className="h-5 w-5" />
@@ -66,7 +66,7 @@ const ChatDetail = () => {
             <Button 
               variant="ghost" 
               size="icon"
-              className="text-blue-600 rounded-full"
+              className="text-blue-600 rounded-full bg-blue-50 hover:bg-blue-100"
               onClick={() => navigate(`/messages/call/${id}?type=video`)}
             >
               <Video className="h-5 w-5" />
@@ -82,8 +82,8 @@ const ChatDetail = () => {
         </div>
         
         <div className="flex-1 flex flex-col items-center justify-center">
-          <div className="bg-blue-50 p-5 rounded-full mb-4">
-            <Send className="h-8 w-8 text-blue-500" />
+          <div className="bg-blue-50 p-6 rounded-full mb-4">
+            <Send className="h-10 w-10 text-blue-500" />
           </div>
           <h3 className="text-lg font-medium text-slate-800 mb-2">No messages yet</h3>
           <p className="text-slate-500 text-center mb-4">Start the conversation with your instructor</p>
@@ -93,9 +93,9 @@ const ChatDetail = () => {
       </div>
       
       {/* Start Video Call Button */}
-      <div className="px-4 py-2">
+      <div className="px-4 py-3">
         <Button 
-          className="w-full bg-green-500 hover:bg-green-600"
+          className="w-full h-14 text-lg font-semibold rounded-2xl bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 shadow-lg"
           onClick={() => navigate(`/messages/call/${id}?type=video`)}
         >
           <Video className="h-4 w-4 mr-2" /> 
@@ -104,14 +104,14 @@ const ChatDetail = () => {
       </div>
       
       {/* Message Input */}
-      <div className="bg-white border-t border-gray-100 p-2">
-        <div className="flex items-center bg-gray-50 rounded-full px-4 py-1 border border-gray-200">
+      <div className="bg-white border-t border-gray-100 p-3">
+        <div className="flex items-center bg-blue-50 rounded-full px-4 py-1 border-2 border-blue-100">
           <Input
             type="text"
             placeholder="Type a message..."
             value={message}
             onChange={(e) => setMessage(e.target.value)}
-            className="flex-1 border-none bg-transparent focus:ring-0 focus-visible:ring-0 focus-visible:ring-offset-0"
+            className="flex-1 border-none bg-transparent focus:ring-0 focus-visible:ring-0 focus-visible:ring-offset-0 h-12 text-base"
             onKeyPress={(e) => {
               if (e.key === 'Enter') {
                 handleSendMessage();
@@ -122,7 +122,7 @@ const ChatDetail = () => {
             type="button" 
             variant="ghost" 
             size="icon" 
-            className="text-blue-600"
+            className="text-blue-600 hover:bg-blue-100 rounded-full"
             onClick={handleSendMessage}
           >
             <Send className="h-5 w-5" />

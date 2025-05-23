@@ -11,15 +11,15 @@ const MessagesPage = () => {
   const [searchQuery, setSearchQuery] = useState('');
 
   return (
-    <div className="flex flex-col h-full pt-8 pb-20 overflow-y-auto">
+    <div className="flex flex-col h-full pt-8 pb-20 overflow-y-auto px-2">
       {/* Header */}
-      <div className="px-4 mb-6">
-        <h1 className="text-2xl font-bold text-slate-800 mb-1">Messages</h1>
-        <p className="text-slate-500 text-sm">Chat with your instructors</p>
+      <div className="text-center mb-8">
+        <h1 className="text-3xl font-bold text-slate-800 mb-2">Messages</h1>
+        <p className="text-slate-600">Chat with your instructors</p>
       </div>
       
       {/* Search */}
-      <div className="px-4 mb-6">
+      <div className="mb-6">
         <div className="relative">
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
           <Input
@@ -27,20 +27,26 @@ const MessagesPage = () => {
             placeholder="Search messages..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="pl-9 h-12 rounded-xl border-2 border-blue-100 focus:border-blue-300 bg-blue-50/30"
+            className="pl-9 h-14 text-lg rounded-2xl border-2 border-blue-100 focus:border-blue-300 bg-blue-50/30"
           />
         </div>
       </div>
       
       {/* Content Tabs */}
-      <div className="px-4">
-        <Tabs defaultValue="chats">
-          <TabsList className="grid grid-cols-2 mb-6">
-            <TabsTrigger value="chats">
+      <div>
+        <Tabs defaultValue="chats" className="w-full">
+          <TabsList className="grid grid-cols-2 mb-6 p-1 bg-blue-50 rounded-xl">
+            <TabsTrigger 
+              value="chats"
+              className="rounded-lg py-2 data-[state=active]:bg-white data-[state=active]:text-blue-600 data-[state=active]:shadow-sm"
+            >
               <MessageCircle className="h-4 w-4 mr-2" />
               Chats
             </TabsTrigger>
-            <TabsTrigger value="calls">
+            <TabsTrigger 
+              value="calls"
+              className="rounded-lg py-2 data-[state=active]:bg-white data-[state=active]:text-blue-600 data-[state=active]:shadow-sm"
+            >
               <Video className="h-4 w-4 mr-2" />
               Calls
             </TabsTrigger>
@@ -49,14 +55,14 @@ const MessagesPage = () => {
           <TabsContent value="chats" className="space-y-2">
             {/* Empty State for Chats */}
             <div className="py-12 flex flex-col items-center justify-center text-center">
-              <div className="bg-blue-50 p-5 rounded-full mb-4">
-                <MessageCircle className="h-8 w-8 text-blue-500" />
+              <div className="bg-blue-50 p-6 rounded-full mb-4">
+                <MessageCircle className="h-10 w-10 text-blue-500" />
               </div>
               <h3 className="text-lg font-medium text-slate-800 mb-2">No messages yet</h3>
-              <p className="text-slate-500 mb-4">Start chatting with an instructor</p>
+              <p className="text-slate-500 mb-6">Start chatting with an instructor</p>
               <Button 
                 variant="default"
-                className="bg-blue-500 hover:bg-blue-600"
+                className="w-full max-w-xs h-14 text-lg font-semibold rounded-2xl bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 shadow-lg"
                 onClick={() => navigate('/instructors')}
               >
                 Find Instructors
@@ -67,14 +73,14 @@ const MessagesPage = () => {
           <TabsContent value="calls" className="space-y-2">
             {/* Empty State for Calls */}
             <div className="py-12 flex flex-col items-center justify-center text-center">
-              <div className="bg-blue-50 p-5 rounded-full mb-4">
-                <Video className="h-8 w-8 text-blue-500" />
+              <div className="bg-blue-50 p-6 rounded-full mb-4">
+                <Video className="h-10 w-10 text-blue-500" />
               </div>
               <h3 className="text-lg font-medium text-slate-800 mb-2">No recent calls</h3>
-              <p className="text-slate-500 mb-4">Your call history will appear here</p>
+              <p className="text-slate-500 mb-6">Your call history will appear here</p>
               <Button 
                 variant="outline"
-                className="border-blue-200 text-blue-600"
+                className="w-full max-w-xs h-14 text-lg font-semibold rounded-2xl border-2 border-blue-100 text-blue-600 hover:bg-blue-50"
                 onClick={() => navigate('/instructors')}
               >
                 Find Instructors

@@ -23,15 +23,15 @@ const Instructors = () => {
   ];
 
   return (
-    <div className="flex flex-col h-full pt-8 pb-20 overflow-y-auto">
+    <div className="flex flex-col h-full pt-8 pb-20 overflow-y-auto px-2">
       {/* Header */}
-      <div className="px-4 mb-6">
-        <h1 className="text-2xl font-bold text-slate-800 mb-1">Find Instructors</h1>
-        <p className="text-slate-500 text-sm">Discover the perfect yoga teacher for you</p>
+      <div className="text-center mb-8">
+        <h1 className="text-3xl font-bold text-slate-800 mb-2">Find Instructors</h1>
+        <p className="text-slate-600">Discover the perfect yoga teacher for you</p>
       </div>
       
       {/* Search and Filter */}
-      <div className="px-4 mb-6 space-y-3">
+      <div className="space-y-3 mb-6">
         <div className="relative">
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
           <Input
@@ -39,7 +39,7 @@ const Instructors = () => {
             placeholder="Search instructors, yoga styles, or city..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="pl-9 h-12 rounded-xl border-2 border-blue-100 focus:border-blue-300 bg-blue-50/30"
+            className="pl-9 h-14 text-lg rounded-2xl border-2 border-blue-100 focus:border-blue-300 bg-blue-50/30"
           />
         </div>
         
@@ -61,16 +61,15 @@ const Instructors = () => {
       </div>
       
       {/* Empty State */}
-      <div className="px-4 py-12 flex flex-col items-center justify-center text-center">
+      <div className="flex-1 flex flex-col items-center justify-center text-center">
         <div className="bg-blue-50 p-6 rounded-full mb-4">
           <Search className="h-10 w-10 text-blue-500" />
         </div>
         <h3 className="text-lg font-medium text-slate-800 mb-2">No instructors found</h3>
-        <p className="text-slate-500 mb-4">Try adjusting your search or filters</p>
+        <p className="text-slate-500 mb-6">Try adjusting your search or filters</p>
         <Button 
-          variant="outline"
-          className="border-blue-200 text-blue-600"
           onClick={() => navigate('/dashboard')}
+          className="w-full max-w-xs h-14 text-lg font-semibold rounded-2xl bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 shadow-lg"
         >
           Back to Dashboard
         </Button>
